@@ -8,17 +8,27 @@
     </div>
   </div>
 
+  <!-- 메뉴창 -->
   <div class="menu">
-    <a v-for="(메뉴, i) in menus" :key="i">{{ 메뉴 }}</a>
+    <a v-for="메뉴 in menus" :key="메뉴">{{ 메뉴 }}</a>
   </div>
-  <div v-for="(상품, i) in products" :key="상품">
-    <img :src="방이미지[i]" class="roomImg" />
-    <p @click="modalToggle">{{ products[i] }}</p>
+
+  <!-- 본문 -->
+  <div v-for="(원룸, i) in 원룸들" :key="i">
+    <p>No. {{ 원룸.id }}</p>
+    <p @click="modalToggle">{{ 원룸.title }}</p>
+    <img :src="원룸.image" class="roomImg" />
+    <p>{{ 원룸.content }}</p>
+    <p>{{ 원룸.price }}</p>
     <button @click="increase(i)">허위매물신고</button>
-    <span> {{ 신고수[i] }}</span>
+    <span>{{ 신고수[i] }}</span>
+    <hr />
   </div>
 </template>
+
 <script>
+import 데이터 from './assets/data.js'
+
 export default {
   name: 'App',
   data() {
@@ -29,9 +39,10 @@ export default {
         require('./assets/images/room1.jpg'),
         require('./assets/images/room2.jpg'),
       ],
-      신고수: [0, 1, 2],
+      신고수: new Array(데이터.length).fill(0),
       products: ['군자동원룸', ' 송정동원룸', '능동원룸'],
       menus: ['Home', 'About', 'Shop'],
+      원룸들: 데이터,
     }
   },
   methods: {
